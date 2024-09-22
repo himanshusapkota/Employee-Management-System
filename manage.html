@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .employee-details {
+            margin-top: 20px;
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Employee Management System</h2>
+
+    <form id="employeeForm">
+        <input type="text" id="employeeName" placeholder="Enter Employee Name" required>
+        <input type="text" id="employeeRole" placeholder="Enter Employee Role" required>
+        <input type="number" id="employeeID" placeholder="Enter Employee ID" required>
+        <input type="number" id="contact" placeholder="Enter contact" required>
+        <input type="email" id="email" placeholder="Enter Email" required>
+        <button type="submit">Add Employee</button>
+    </form>
+
+    <form id="searchForm">
+        <input type="number" id="searchID" placeholder="Search by Employee ID" required>
+        <button type="submit">Search Employee</button>
+    </form>
+
+    <div class="employee-details" id="employeeDetails"></div>
+</div>
+
+<script>
+    // Function to add employee data
+    document.getElementById('employeeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let employeeName = document.getElementById('employeeName').value;
+        let employeeRole = document.getElementById('employeeRole').value;
+        let employeeID = document.getElementById('employeeID').value;
+        let contact = document.getElementById('contact').value;
+        let email = document.getElementById('email').value;
+        
+        // Creating an employee object
+        let employee = {
+            name: employeeName,
+            role: employeeRole,
+            id: employeeID,
+            contact: contact,
+            email: email
+        };
+
+        // Storing employee data in local storage using the ID as the key
+        localStorage.setItem(employeeID, JSON.stringify(employee));
+        alert('Employee added successfully!');
+        
+        // Reset the form fields
+        document.getElementById('employeeForm').reset();
+    });
+
+    // Function to search employee data by ID
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        let searchID = document.getElementById('searchID').value;
+
+        // Get the employee data from local storage
+        let employeeData = localStorage.getItem(searchID);
+        
+        if (employeeData) {
+            let employee = JSON.parse(employeeData);
+            document.getElementById('employeeDetails').innerHTML = `
+                <h3>Employee Details</h3>
+                <p><strong>Name:</strong> ${employee.name}</p>
+                <p><strong>Role:</strong> ${employee.role}</p>
+                <p><strong>ID:</strong> ${employee.id}</p>
+                <p><strong>Contact:</strong> ${employee.contact}</p>
+                <p><strong>Email:</strong> ${employee.email}</p>
+            `;
+        } else {
+            document.getElementById('employeeDetails').innerHTML = '<p>Employee not found!</p>';
+        }
+
+        // Reset the search field
+        document.getElementById('searchForm').reset();
+    });
+</script>
+
+</body>
+</html>
