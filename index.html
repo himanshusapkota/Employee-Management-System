@@ -66,7 +66,7 @@
 </div>
 
 <script>
-    // Function to add employee data
+   
     document.getElementById('employeeForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -76,7 +76,7 @@
         let contact = document.getElementById('contact').value;
         let email = document.getElementById('email').value;
         
-        // Creating an employee object
+       
         let employee = {
             name: employeeName,
             role: employeeRole,
@@ -85,21 +85,19 @@
             email: email
         };
 
-        // Storing employee data in local storage using the ID as the key
         localStorage.setItem(employeeID, JSON.stringify(employee));
         alert('Employee added successfully!');
         
-        // Reset the form fields
+       
         document.getElementById('employeeForm').reset();
     });
 
-    // Function to search employee data by ID
+  
     document.getElementById('searchForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
         let searchID = document.getElementById('searchID').value;
 
-        // Get the employee data from local storage
         let employeeData = localStorage.getItem(searchID);
         
         if (employeeData) {
